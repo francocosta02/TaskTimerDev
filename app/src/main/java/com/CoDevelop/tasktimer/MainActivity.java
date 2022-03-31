@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String motivodePausaSeleccionado = "";
     String [] actividad = new String[]{"Corte", "Trenzado", "Prensado", "Inspeccion"};
     String [] ListaMotivoPausa = new String[]{"Descanzo", "Seteo de Maquina", "Reparacion"};
+    String lineaProd = "ACE";
 
     Button btnScanOP;
     Button btnValidar;
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Date horaInicioProceso = new Date();
     Date horaInicioDB;
 
+    getListadoOperacion Operacion = new getListadoOperacion();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //--Set up SPINNNER
         spinnerActividad = (Spinner) findViewById(R.id.spinnerActividad);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, actividad);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Operacion.getListado(lineaProd));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerActividad.setAdapter(adapter);
         spinnerActividad.setEnabled(false);
@@ -223,12 +227,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //-------------------------------------------------------------------------------------
 
                             horaInicioProceso = calendar.getTime();
-                            String horaInicio = formated.format(horaInicioProceso);
+
 
 
                             ordenProduccion = etOrdenProduccion.getText().toString();
 
-                            //guardarHoraInicioProceso(ordenProduccion, horaInicio); //graba inicio de accion.
+                            guardarHoraInicioProceso(ordenProduccion, horaInicioProceso); //graba inicio de accion.
                             //Toast.makeText(this, "Hora de Inicio: " + horaInicio, Toast.LENGTH_SHORT).show();
                             StartStopTapped(this);
                             iniciado = 1; // transformar a boton Pausar
@@ -300,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void guardarHoraInicioProceso(String ordenProduccion,String horaInicioProceso) {
+    public void guardarHoraInicioProceso(String ordenProduccion,Date horaInicioProceso) {
 
         try {
 
