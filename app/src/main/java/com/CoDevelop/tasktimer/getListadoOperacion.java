@@ -39,7 +39,9 @@ public class getListadoOperacion extends MainActivity {
                 ResultSet resultSet = statement.executeQuery(query);
                 while (resultSet.next()) {
 
-                    data.add("detoperacion");
+
+
+                    data.add(resultSet.getString("detoperacion"));
 
                 }
                 ConnectionResult = "Success";
