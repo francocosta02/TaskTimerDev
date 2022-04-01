@@ -66,14 +66,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Date horaInicioProceso = new Date();
     Date horaInicioDB;
 
-    getListadoOperacion Operacion = new getListadoOperacion();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        getListadoOperacion Operacion = new getListadoOperacion();
         //--Set up SPINNNER
         spinnerActividad = (Spinner) findViewById(R.id.spinnerActividad);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Operacion.getListado(lineaProd));
